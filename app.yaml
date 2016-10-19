@@ -1,0 +1,52 @@
+runtime: php55
+api_version: 1
+
+handlers:
+- url: /(.*\.(htm|html|css|js|ico|jpg|jpeg|png|gif|woff|ttf|otf|eot|svg))$
+  static_files: public/\1
+  upload: public/.*\.(htm|html|css|js|ico|jpg|jpeg|png|gif|woff|ttf|otf|eot|svg)$
+  application_readable: true
+
+- url: /wordpress/wp-admin/
+  script: public/wordpress/wp-admin/index.php
+
+- url: /wp-admin/
+  script: public/wordpress/wp-admin/index.php
+
+- url: /wordpress/(.+\.php)$
+  script: public/wordpress/\1
+
+- url: /.*
+  script: public/index.php
+
+env_variables:
+  #App
+  APP_ENV: "production"
+  APP_KEY: "xxxxxxxxxxxx"
+  #Database
+  DB_NAME: "suzie"
+  DB_USER: "root"
+  DB_PASSWORD: "password"
+  DB_HOST: ":/cloudsql/project-id:us-central1:db-instance-name"
+  DB_PREFIX: "wp_"
+  #Wordpress
+  WP_DEBUG: "true"
+  WP_FORCE_SSL: "false"
+  SITE_URL: "http://domain.com"
+  #Varnish
+  VARNISH_ENABLED: "false"
+  #Mailgun
+  MAILGUN_KEY: "key-xxxxxxxxxxxxxxx-xxxx"
+  MAILGUN_DOMAIN: "domain.com"
+  MAILGUN_FROM: "user@domain.com"
+  #GCS
+  SYNC: "gcs"
+  GCS_KEY: "XXXXXXXXX"
+  GCS_SECRET: "xxxxxxxxxxxxxxxxx"
+  GCS_SERVE: "true"
+  GCS_BUCKET: "project-id.appspot.com"
+  #CDN
+  CDN_ASSET_ENABLED: "false"
+  CDN_SITE_ENABLED: "false"
+  #Scheduler
+  SCHEDULER_ROUTE: "false"
